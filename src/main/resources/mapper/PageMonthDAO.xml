@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.page.page.dao.PageMonthDAO">
+
+    <select id="retrieveListMonth" resultType="DataUtil">
+        <![CDATA[
+            SELECT
+                  ID 	 AS "pageMonthID"
+                , YEARS  AS "pageYear"
+                , NAME 	 AS "pageMonth"
+            FROM PAGEMONTH
+                WHERE YEARS =  TO_CHAR( CURRENT_DATE, 'YYYY')
+                ORDER BY ID ASC
+        ]]>
+    </select>
+
+    <select id="retrieveMonthInfo" resultType="DataUtil">
+        <![CDATA[
+           	SELECT
+                  ID 	 AS "pageMonthID"
+                , YEARS  AS "pageYear"
+                , NAME 	 AS "pageMonth"
+            FROM PAGEMONTH
+                WHERE YEARS =  TO_CHAR( CURRENT_DATE, 'YYYY')
+                AND id = #{monthID}
+        ]]>
+    </select>
+</mapper>

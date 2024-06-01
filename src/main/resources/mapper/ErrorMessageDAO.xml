@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.page.page.dao.ErrorMessageDAO">
+
+    <select id="retrieveErrorMessageInfo" resultType="DataUtil">
+        <![CDATA[
+          SELECT
+             error_code             AS "errorCode"
+            ,error_language         AS "errorLanguage"
+            ,error_description      AS "errorDescription"
+            ,create_by              AS "createBy"
+            ,register_date          AS "createDate"
+            ,register_time          AS "CreateTime"
+            ,update_date            AS "updateDate"
+            ,update_time            AS "updateTime"
+            ,update_by              AS "updateBY"
+          FROM ERROR_CODE_INFO
+          WHERE error_code = #{errorCode}
+          AND error_language = #{errorLanguage}
+        ]]>
+    </select>
+
+</mapper>

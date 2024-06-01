@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.page.page.dao.UserTokenInfoDAO">
+
+    <select id="retrieveUserTokenInfo" resultType="DataUtil">
+        <![CDATA[
+            SELECT USERNAME
+                , TOKEN
+                , issuedDate
+                ,issuedTime
+                ,expiredDate
+                ,expiredTime
+                ,remoteIP
+                ,STATUS
+                ,USERTYPE
+                FROM lemon.OUATH2_TOKEN
+            WHERE USERNAME = #{userName}
+                and STATUS = '0'
+            ]]>
+    </select>
+
+    <insert id="registerUserTokenInfo">
+        <![CDATA[
+			INSERT INTO lemon.lemon.OUATH2_TOKEN
+                ( USERNAME
+                , TOKEN
+                , issuedDate
+                ,issuedTime
+                ,expiredDate
+                ,expiredTime
+                ,remoteIP
+                ,STATUS
+                ,USERTYPE
+                )
+            values (
+                 #{userName}
+                ,#{token}
+                ,#{issuedDate}
+                ,#{issuedTime}
+                ,#{expiredDate}
+                ,#{expiredTime}
+                ,#{remoteIP}
+                ,#{status}
+                ,#{userType}
+            )
+         ]]>
+    </insert>
+
+    <update id="updateUserTokenInfo">
+        <![CDATA[
+            UPDATE lemon.OUATH2_TOKEN
+                   SET token 		= #{token}
+                    , issuedDate 	= #{issuedDate}
+                    , issuedTime  	= #{issuedTime}
+                    , expiredDate  = #{expiredDate}
+                    , expiredTime  = #{expiredTime}
+                    , remoteIP  	= COALESCE( #{remoteIP}, '')
+                    , STATUS  		= #{status}
+                    , USERTYPE   	= #{userType}
+            WHERE USERNAME = #{userName}
+        ]]>
+    </update>
+
+    <select id="retrieveUserTokenInfoByToken" resultType="DataUtil">
+        <![CDATA[
+            SELECT USERNAME
+                , TOKEN
+                , issuedDate
+                ,issuedTime
+                ,expiredDate
+                ,expiredTime
+                ,remoteIP
+                ,STATUS
+                ,USERTYPE
+                FROM lemon.OUATH2_TOKEN
+            WHERE TOKEN = #{token}
+                and STATUS = '0'
+            ]]>
+    </select>
+
+</mapper>

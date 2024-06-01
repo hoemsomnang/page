@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.page.page.dao.PageListDAO">
+
+    <select id="retrieveListPageInformationByAdmin" resultType="DataUtil">
+        <![CDATA[
+              	SELECT
+                      A.page_id 			AS "pageID"
+                    , A.office_id 			AS "officeID"
+                    , A.page_owner_id 		AS "pageOwnerID"
+                    , B.page_owner_name 	as "pageOwnerName"
+                    , A.main_owner_id 		AS "mainOwnerID"
+                    , C.main_owner_name 	as "mainOwnerName"
+                    , A.month_id 			AS "monthID"
+                    , A.years 				AS "years"
+                    , A.month_name 			AS "monthName"
+                    , A.pagename 			AS "pageName"
+                    , A.pageearn 			AS "pageEarn"
+                    , A.officepercent 		AS "officePercent"
+                    , A.officeamount 		AS "officeAmount"
+                    , A.ownerpercent 		AS "ownerPercent"
+                    , A.owneramount 		AS "ownerAmount"
+                    , A.pagestatus 			AS "pageStatus"
+                    , A.pageLink            AS "pageLink"
+                    , A.create_by           AS "createBy"
+                    , A.register_date       AS "createDate"
+                    , A.register_time       AS "CreateTime"
+                    , A.update_date         AS "updateDate"
+                    , A.update_time         AS "updateTime"
+                    , A.update_by           AS "updateBY"
+                FROM PAGE A
+                    INNER JOIN PAGEOWNER B
+                        ON A.PAGE_OWNER_ID = B.PAGE_OWNER_ID
+                    INNER JOIN MAINONWER C
+                        ON A.MAIN_OWNER_ID  = C.MAIN_OWNER_ID
+                WHERE  A.month_id  = #{monthID}
+            	AND ( A.create_by = #{userID} OR A.main_owner_id = ( SELECT MAIN_OWNER_ID FROM USER_INFO WHERE USERID  = #{userID} ) )
+        ]]>
+    </select>
+
+    <select id="retrieveListPageInformationByUser" resultType="DataUtil">
+        <![CDATA[
+            SELECT
+                      A.page_id 			AS "pageID"
+                    , A.office_id 			AS "officeID"
+                    , A.page_owner_id 		AS "pageOwnerID"
+                    , B.page_owner_name 	as "pageOwnerName"
+                    , A.main_owner_id 		AS "mainOwnerID"
+                    , C.main_owner_name 	as "mainOwnerName"
+                    , A.month_id 			AS "monthID"
+                    , A.years 				AS "years"
+                    , A.month_name 			AS "monthName"
+                    , A.pagename 			AS "pageName"
+                    , A.pageearn 			AS "pageEarn"
+                    , A.officepercent 		AS "officePercent"
+                    , A.officeamount 		AS "officeAmount"
+                    , A.ownerpercent 		AS "ownerPercent"
+                    , A.owneramount 		AS "ownerAmount"
+                    , A.pagestatus 			AS "pageStatus"
+                    , A.pageLink            AS "pageLink"
+                    , A.create_by           AS "createBy"
+                    , A.register_date       AS "createDate"
+                    , A.register_time       AS "CreateTime"
+                    , A.update_date         AS "updateDate"
+                    , A.update_time         AS "updateTime"
+                    , A.update_by           AS "updateBY"
+                FROM PAGE A
+                    INNER JOIN PAGEOWNER B
+                        ON A.PAGE_OWNER_ID = B.PAGE_OWNER_ID
+                    INNER JOIN MAINONWER C
+                        ON A.MAIN_OWNER_ID  = C.MAIN_OWNER_ID
+                WHERE A.create_by = #{userID}
+                and A.month_id  = #{monthID}
+                ORDER BY YEARS DESC , MONTH_ID DESC
+        ]]>
+    </select>
+
+    <select id="retrievePageInformation" resultType="DataUtil">
+        <![CDATA[
+             SELECT
+                    page_id 			AS "pageID"
+                , office_id 			AS "officeID"
+                , page_owner_id 		AS "pageOwnerID"
+                , main_owner_id 		AS "mainOwnerID"
+                , month_id 				AS "monthID"
+                , years 				AS "years"
+                , month_name 			AS "monthName"
+                , pagename 				AS "pageName"
+                , pageearn 				AS "pageEarn"
+                , officepercent 		AS "officePercent"
+                , officeamount 			AS "officeAmount"
+                , ownerpercent 			AS "ownerPercent"
+                , owneramount 			AS "ownerAmount"
+                , pagestatus 			AS "pageStatus"
+                ,create_by              AS "createBy"
+                ,register_date          AS "createDate"
+                ,register_time          AS "CreateTime"
+                ,update_date            AS "updateDate"
+                ,update_time            AS "updateTime"
+                ,update_by              AS "updateBY"
+            FROM page
+            WHERE page_id = #{pageID}
+            and month_id 	= #{monthID}
+            and years       = #{years}
+        ]]>
+    </select>
+
+    <insert id="registerPageInformation">
+        <![CDATA[
+            INSERT INTO PAGE
+                VALUES (
+                      #{pageID}
+                    , #{officeID}
+                    , #{pageOwnerID}
+                    , #{mainOwnerID}
+                    , #{monthID}
+                    , #{years}
+                    , #{monthName}
+                    , #{pageName}
+                    , #{pageEarn}
+                    , #{officePercent}
+                    , #{officeAmount}
+                    , #{ownerPercent}
+                    , #{ownerAmount}
+                    , #{pageStatus}
+                    , #{pageLink}
+                    , #{createBy}
+                    , #{createDate}
+                    , #{CreateTime}
+                    , #{updateDate}
+                    , #{updateTime}
+                    , #{updateBY}
+                )
+        ]]>
+    </insert>
+
+    <update id="updatePageInformation">
+        <![CDATA[
+            UPDATE PAGE
+              set  office_id 			= #{officeID}
+                , page_owner_id 		= #{pageOwnerID}
+                , main_owner_id 		= #{mainOwnerID}
+                , month_id 				= #{monthIDUpdate}
+                , years 				= #{yearsUpdate}
+                , month_name 			= #{monthName}
+                , pagename 				= #{pageName}
+                , pageearn 				= #{pageEarn}
+                , officepercent 	    = #{officePercent}
+                , officeamount 			= #{officeAmount}
+                , ownerpercent 			= #{ownerPercent}
+                , owneramount 			= #{ownerAmount}
+                , pagestatus 			= #{pageStatus}
+                , pageLink             = #{pageLink}
+                ,update_date            = #{updateDate}
+                ,update_time            = #{updateTime}
+                ,update_by              = #{updateBY}
+            WHERE page_id = #{pageID}
+                and month_id = #{monthID}
+                and years =  #{years}
+        ]]>
+    </update>
+
+</mapper>

@@ -1,0 +1,258 @@
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Admin</title>
+	<div th:replace="~{fragments/header :: header-css}" />
+	<script src="../../js/userlist.js"></script>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+
+	<div th:replace="~{fragments/header :: header}" />
+
+	<div th:replace="~{fragments/leftside :: leftside}" />
+
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1></h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item">User Information</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<!-- /.container-fluid -->
+
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-header">
+									<!-- <button type="button" class="btn btn-default"
+										data-toggle="modal" data-target="#updateModal">Launch
+										Extra Large Modal</button> -->
+									<button type="button" class="btn btn-success "
+										data-toggle="modal" data-target="#registerModal" th:onclick="registerModel()">
+										<i class="fas fa-plus"></i>
+										<span>Add New</span>
+									</button>
+								</div>
+								<!-- /.card-header -->
+								<div class="card">
+									<div class="card-header"><h1>All User</h1></div>
+									<!-- /.card-header -->
+									<div class="card-body">
+										<table id="example1"
+											class="table table-bordered table-striped">
+											<thead>
+												<tr>
+													<th>userID</th>
+													<th>Full Name</th>
+													<th>Role</th>
+													<th style="display:none;">mainOwnerID</th>
+													<th>Main Owner</th>
+													<th>Action</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="list:${list}">
+													<td th:text="${list.userID}"></td>
+													<td th:text="${list.fullName}"></td>
+													<td th:text="${list.roles}"></td>
+													<td style="display:none;" th:text="${list.mainOwnerID}"></td>
+													<td th:text="${list.mainOwnerName}"></td>
+													<td>
+														<button type="button" data-toggle="modal"
+																data-target="#updateModal"
+																th:onclick="editInformation( [[${list}]] );"
+																class="btn btn-success btn-xs">
+															<i class="fas fa-edit"></i>
+														</button>
+													</td>
+												</tr>
+											</tbody>
+											<tfoot>
+												<tr>
+													<th>userID</th>
+													<th>Full Name</th>
+													<th>Role</th>
+													<th style="display:none;" >mainOwnerID</th>
+													<th>Main Owner</th>
+													<th>Action</th>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+									<!-- /.card-body -->
+								</div>
+								<!-- /.card-body -->
+							</div>
+							<!-- /.card -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+		</section>
+		<!-- Modal Register -->
+		<div class="modal fade" id="registerModal">
+			<div class="modal-dialog modal-md">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Register User Information</h4>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="card card-primary">
+							<div class="card-header"></div>
+							<!-- /.card-header -->
+							<!-- form start -->
+							<form>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<label>userID</label>
+												<input type="text" class="form-control" id="userID" th:onkeydown="return /[a-zA-Z]/i.test(event.key)" autocomplete="off">
+											</div>
+											<div class="form-group">
+												<label>Full Name</label> <input type="text" class="form-control" id="fullName">
+											</div>
+											<div class="form-group">
+												<label>Password</label> <input type="password" class="form-control" id="password" autocomplete="off">
+											</div>
+											<div class="form-group">
+												<label>Confirm Password</label> <input type="password" class="form-control" id="confirmPassword">
+											</div>
+											<div class="form-group">
+												<label>Role</label>
+												<select class="form-control" id="roles" th:onClick="userRoleOnChange()">
+													<option value="USER">User</option>
+													<option value="ADMIN">Admin</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label>Main Owner Name</label>
+												<select class="form-control" id="mainOwnerID" >
+													<option th:each="listMainOwner : ${listMainOwner}" th:value="${listMainOwner.mainOwnerID}" th:text="${listMainOwner.mainOwnerName}"></option>
+												</select>
+											</div>
+
+										</div>
+									</div>
+								</div>
+								<!-- /.card-body -->
+							</form>
+						</div>
+					</div>
+					<div class="modal-footer justify-content-between">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" th:onClick="registerDataInformation();">Save</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!-- Modal Update -->
+		<div class="modal fade" id="updateModal">
+			<div class="modal-dialog modal-md">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Update User Information</h4>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="card card-primary">
+							<div class="card-header"></div>
+							<!-- /.card-header -->
+							<!-- form start -->
+							<form>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="form-group">
+												<label>userID</label>
+												<input type="text" class="form-control" id="userIDUpdate" disabled="true" th:onkeydown="return /[a-zA-Z]/i.test(event.key)" autocomplete="off">
+											</div>
+											<div class="form-group">
+												<label>Full Name</label> <input type="text" class="form-control" id="fullNameUpdate">
+											</div>
+											<div class="form-group">
+												<label>Password</label> <input type="password" class="form-control" id="passwordUpdate" autocomplete="off">
+											</div>
+											<div class="form-group">
+												<label>Confirm Password</label> <input type="password" class="form-control" id="confirmPasswordUpdate" autocomplete="off">
+											</div>
+											<div class="form-group">
+												<label>Role</label>
+												<select class="form-control" id="rolesUpdate" th:onClick="userRoleUpdateOnChange()">
+													<option value="USER">User</option>
+													<option value="ADMIN">Admin</option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label>Main Owner Name</label>
+												<select class="form-control" id="mainOwnerIDUpdate" >
+													<option th:each="listMainOwner : ${listMainOwner}" th:value="${listMainOwner.mainOwnerID}" th:text="${listMainOwner.mainOwnerName}"></option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- /.card-body -->
+							</form>
+						</div>
+					</div>
+					<div class="modal-footer justify-content-between">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" th:onClick="updateDataInformation();">Save changes</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+	</div>
+
+	<div th:replace="~{fragments/footer :: footer}" />
+
+	<script language="JavaScript">
+		/** add active class and stay opened when selected */
+        var url = window.location;
+
+        // for sidebar menu entirely but not cover treeview
+        $('ul.nav-sidebar a').filter(function() {
+            return this.href == url;
+        }).addClass('active');
+
+        // for treeview
+        $('ul.nav-treeview a').filter(function() {
+            return this.href == url;
+        }).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').prev('a').addClass('active');
+
+        $(function () {
+            $("#example1").DataTable({
+              "responsive": true, "lengthChange": false, "autoWidth": false,
+              "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+	</script>
+</body>
+</html>

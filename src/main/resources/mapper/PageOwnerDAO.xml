@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.page.page.dao.PageOwnerDAO">
+
+    <select id="retrieveListPageOwnerInfo" resultType="DataUtil">
+        <![CDATA[
+            SELECT
+                  PAGE_OWNER_ID 	as "pageOwnerID"
+                , PAGE_OWNER_NAME	as "pageOwnerName"
+                , PHONE 			as "phone"
+                , ADDRESS 			as "address"
+                , create_by			as "createBy"
+                , register_date 	as "createDate"
+                , register_time 	as "CreateTime"
+                , update_date 		as "updateDate"
+                , update_time 		as "updateTime"
+                , update_by			as "updateBY"-- user that update
+            FROM PAGEOWNER
+            ORDER BY PAGE_OWNER_ID
+        ]]>
+    </select>
+
+    <select id="retrievePageOwnerInformation" resultType="DataUtil">
+        <![CDATA[
+
+        ]]>
+    </select>
+
+    <insert id="registerPageOwnerInformation">
+        <![CDATA[
+        INSERT INTO PAGEOWNER
+          VALUES (
+                  ( SELECT COALESCE(MAX(PAGE_OWNER_ID) + 1 ,1) FROM PAGEOWNER )
+                    , #{pageOwnerName}
+                    , #{phone}
+                    , #{address}
+                    , #{createBy}
+                    , #{createDate}
+                    , #{CreateTime}
+                    , #{updateDate}
+                    , #{updateTime}
+                    , #{updateBY}
+                 )
+        ]]>
+    </insert>
+
+    <update id="updatePageOwnerInformation">
+        UPDATE   PAGEOWNER
+            SET PAGE_OWNER_NAME  = #{pageOwnerName}
+            , phone				 = coalesce(#{phone}, phone )
+            , ADDRESS 			 = coalesce(#{address},address)
+            , UPDATE_DATE 	     = #{updateDate}
+            , UPDATE_TIME 		 = #{updateTime}
+            , UPDATE_BY			 = #{updateBY}
+        WHERE PAGE_OWNER_ID      = #{pageOwnerID}
+    </update>
+
+</mapper>

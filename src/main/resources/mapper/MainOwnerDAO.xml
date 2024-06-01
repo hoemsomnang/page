@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.page.page.dao.MainOwnerDAO">
+
+    <select id="retrieveListMainOwnerInfo" resultType="DataUtil">
+        <![CDATA[
+            select
+                  main_owner_id 		as "mainOwnerID"
+                , main_owner_name 		as "mainOwnerName"
+                , address 				as "address"
+                , create_by				as "createBy"
+                , register_date 		as "createDate"
+                , register_time 		as "CreateTime"
+                , update_date 			as "updateDate"
+                , update_time 			as "updateTime"
+                , update_by				as "updateBY"-- user that update
+            from mainonwer
+            order by main_owner_id
+        ]]>
+    </select>
+
+    <select id="retrieveMainOwnerInformation" resultType="DataUtil">
+        <![CDATA[
+
+        ]]>
+    </select>
+
+    <insert id="registerMainOwnerInformation">
+        <![CDATA[
+            INSERT INTO MAINONWER
+                values (
+                 ( SELECT COALESCE(MAX(main_owner_id) + 1 ,1) FROM mainonwer )
+                , #{mainOwnerName}
+                , #{address}
+                , #{createBy}
+                , #{createDate}
+                , #{CreateTime}
+                , #{updateDate}
+                , #{updateTime}
+                , #{updateBY}
+            )
+        ]]>
+    </insert>
+
+    <update id="updateMainOwnerInformation">
+        UPDATE   mainonwer
+            SET MAIN_OWNER_NAME  = #{mainOwnerName}
+            , ADDRESS 			 = coalesce(#{address},address)
+            , UPDATE_DATE 	     = #{updateDate}
+            , UPDATE_TIME 		 = #{updateTime}
+            , UPDATE_BY			 = #{updateBY}
+        WHERE MAIN_OWNER_ID      = #{mainOwnerID}
+
+
+    </update>
+
+</mapper>

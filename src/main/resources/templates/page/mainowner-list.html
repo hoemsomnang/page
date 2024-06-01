@@ -1,0 +1,249 @@
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin</title>
+    <div th:replace="~{fragments/header :: header-css}" />
+    <script src="../../js/mainownerlist.js"></script>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+
+<div th:replace="~{fragments/header :: header}" />
+
+<div th:replace="~{fragments/leftside :: leftside}" />
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item">Main Owner Information</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <!-- <button type="button" class="btn btn-default"
+                                    data-toggle="modal" data-target="#updateModal">Launch
+                                    Extra Large Modal</button> -->
+                                <button type="button" class="btn btn-success"
+                                        data-toggle="modal" data-target="#registerModal" >
+                                    <i class="fas fa-plus"></i>
+                                    <span>Add New</span>
+                                </button>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card">
+                                <div class="card-header"><h1>All Main Owner</h1></div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <table id="example1"
+                                           class="table table-bordered table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Address</th>
+                                            <th>Create By</th>
+                                            <th>Create Date</th>
+                                            <th>Create Time</th>
+                                            <th>Update By</th>
+                                            <th>Update Date</th>
+                                            <th>Update Time</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="listData:${listData}">
+                                            <td th:text="${listData.mainOwnerID}"></td>
+                                            <td th:text="${listData.mainOwnerName}"></td>
+                                            <td th:text="${listData.address}"></td>
+                                            <td th:text="${listData.createBy}"></td>
+                                            <td th:text="${listData.createDate}"></td>
+                                            <td th:text="${listData.CreateTime}"></td>
+                                            <td th:text="${listData.updateBY}"></td>
+                                            <td th:text="${listData.updateDate}"></td>
+                                            <td th:text="${listData.updateTime}"></td>
+                                            <td>
+                                                <button type="button" data-toggle="modal"
+                                                        data-target="#updateModal"
+                                                        th:onclick="editInformation( [[${listData}]] );"
+                                                        class="btn btn-success btn-xs">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Address</th>
+                                            <th>Create By</th>
+                                            <th>Create Date</th>
+                                            <th>Create Time</th>
+                                            <th>Update By</th>
+                                            <th>Update Date</th>
+                                            <th>Update Time</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <!-- /.card-body -->
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </section>
+    </section>
+    <!-- Modal Register -->
+    <div class="modal fade" id="registerModal">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Register Main Owner Information</h4>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card card-primary">
+                        <div class="card-header"></div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+
+                                        <div class="form-group">
+                                            <label>ID</label>
+                                            <input type="text"  class="form-control" disabled="true">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Address</label>
+                                            <input type="text"  id="address" class="form-control" >
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+
+                                        <div class="form-group">
+                                            <label>Name</label>
+                                            <input type="text" id="mainOwnerName" class="form-control" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" th:onClick="registerDataInformation();">Save</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- Modal Update -->
+    <div class="modal fade" id="updateModal">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Update Main Owner Information</h4>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="card card-primary">
+                        <div class="card-header"></div>
+                        <!-- /.card-header -->
+                        <!-- form start -->
+                        <form>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Main Owner ID</label>
+                                            <input type="text"  id="mainOwnerIDUpdate" class="form-control" disabled="true">
+                                        </div>
+                                        <div class="form-group">
+                                        <label>Main Owner Address</label>
+                                        <input type="text"  id="addressUpdate" class="form-control" >
+                                    </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Main Owner Name</label>
+                                            <input type="text" id= "mainOwnerNameUpdate" class="form-control" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" th:onClick="updateDataInformation();"> Save changes</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}" />
+
+<script language="JavaScript">
+    /** add active class and stay opened when selected */
+    var url = window.location;
+
+    // for sidebar menu entirely but not cover treeview
+    $('ul.nav-sidebar a').filter(function() {
+        return this.href == url;
+    }).addClass('active');
+
+    // for treeview
+    $('ul.nav-treeview a').filter(function() {
+        return this.href == url;
+    }).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').prev('a').addClass('active');
+
+   $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+});
+</script>
+
+</body>
+</html>

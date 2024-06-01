@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.page.page.dao.MenuManagementDAO">
+
+    <insert id="registerUserMenuInfo">
+        <![CDATA[
+		INSERT INTO LEMON.MENU_DETAIL
+			(		USER_ID 			/*	userName					*/
+				,	LVEL1_MENU_CD 		/*	menuLevel1 				*/
+				,	LVEL2_MENU_CD		/*	menuLevel2				*/
+				,	MENU_USE_AUTH_DVCD 	/*	menuUseRightTypeCode	*/
+				,	REG_DT 				/*	registerDate			*/
+				,	CHNG_DT 			/*	changeDate				*/
+				,	CLS_DT				/*							*/
+				,	CRTN_ID 			/*	creationID				*/
+				,	CRTN_DTTM 			/*	createDateTime			*/
+				,	UPDT_ID 			/*	updateID				*/
+				,	UPDT_DTTM			/*	updateDateTime			*/
+			) VALUES
+			(  		#{userName}
+				,	#{menuLevel1}
+				,	#{menuLevel2}
+				,	#{menuUseRightTypeCode}
+				,	#{registerDate}
+				,	#{changeDate}
+				,	''
+				,	#{creationID}
+				,	CURRENT_TIMESTAMP
+				,	#{updateID}
+				,	CURRENT_TIMESTAMP
+			)
+  	]]>
+    </insert>
+
+    <select id="retriveListUserAccessMenu" resultType="DataUtil">
+        <![CDATA[
+		   SELECT
+				B.USER_ID															AS "userName"
+				, A.SEQNO															AS "seqNo"
+				, A.LVEL1_MENU_CD													AS "level1MenuCode"
+				, A.LVEL2_MENU_CD													AS "level2MenuCode"
+				, CASE
+					WHEN C.SUBIDYN = 'N' THEN '3'
+					ELSE COALESCE(B.MENU_USE_AUTH_DVCD, A.MENU_USE_AUTH_DVCD)
+				END																	AS "menuUseRightTypeCode"
+				, A.LVEL1_MENU_DESC													AS "level1MenuDescription"
+				, A.MENU_URI														AS "level2MenuDescription"
+			FROM
+				LEMON.MENU_MASTER A
+				LEFT JOIN LEMON.MENU_DETAIL  B ON
+					B.USER_ID = #{userName}
+					AND A.LVEL1_MENU_CD = B.LVEL1_MENU_CD
+					AND A.LVEL2_MENU_CD = B.LVEL2_MENU_CD
+				INNER JOIN LEMON.USER_MASTER  C ON C.USER_ID = #{userName}
+			WHERE  A.MENU_SHOW_YN = 'Y'
+			ORDER BY A.SEQNO ASC
+		]]>
+    </select>
+
+    <select id="retriveOnlyUseMenuForUserDetail" resultType="DataUtil">
+        <![CDATA[
+			SELECT
+				  A.SEQNO															AS "seqNo"
+				, A.LVEL1_MENU_CD													AS "level1MenuCode"
+				, A.LVEL2_MENU_CD													AS "level2MenuCode"
+				, CASE
+					WHEN C.SUBIDYN = 'N' THEN '3'
+					ELSE COALESCE(B.MENU_USE_AUTH_DVCD, A.MENU_USE_AUTH_DVCD)
+				END																	AS "menuUseRightTypeCode"
+				, A.LVEL1_MENU_DESC													AS "level1MenuDescription"
+				, A.MENU_URI														AS "level2MenuDescription"
+				FROM
+					LEMON.MENU_MASTER A
+					INNER JOIN LEMON.MENU_DETAIL  B ON
+						B.USER_ID = #{userName}
+						AND A.LVEL1_MENU_CD = B.LVEL1_MENU_CD
+						AND A.LVEL2_MENU_CD = B.LVEL2_MENU_CD
+					INNER JOIN LEMON.USER_MASTER  C ON C.USER_ID = #{userName}
+				WHERE  A.MENU_SHOW_YN = 'Y'
+				and B.MENU_USE_AUTH_DVCD = '3'
+				ORDER BY A.SEQNO asc
+		]]>
+    </select>
+
+
+    <select id="retrieveAllListUserMenu" resultType="DataUtil">
+        <![CDATA[
+		 SELECT
+				B.USER_ID															AS "userName"
+				, A.SEQNO															AS "seqNo"
+				, A.LVEL1_MENU_CD													AS "level1MenuCode"
+				, A.LVEL2_MENU_CD													AS "level2MenuCode"
+				, CASE
+					WHEN C.SUBIDYN = 'N' THEN '3'
+					ELSE COALESCE(B.MENU_USE_AUTH_DVCD, A.MENU_USE_AUTH_DVCD)
+				END																	AS "menuUseRightTypeCode"
+				, A.LVEL1_MENU_DESC													AS "level1MenuDescription"
+				, A.MENU_URI														AS "level2MenuDescription"
+			FROM
+				LEMON.MENU_MASTER A
+				INNER JOIN LEMON.MENU_DETAIL  B ON
+					B.USER_ID = #{userName}
+					AND A.LVEL1_MENU_CD = B.LVEL1_MENU_CD
+					AND A.LVEL2_MENU_CD = B.LVEL2_MENU_CD
+				INNER JOIN LEMON.USER_MASTER  C ON C.USER_ID = #{userName}
+			WHERE  A.MENU_SHOW_YN = 'Y'
+			ORDER BY A.SEQNO ASC
+		]]>
+    </select>
+
+    <update id="updateMenuDetail">
+        <![CDATA[
+			UPDATE LEMON.MENU_DETAIL
+				SET MENU_USE_AUTH_DVCD = #{menuUseRightTypeCode}
+			WHERE user_id = #{userName}
+			and lvel2_menu_cd =#{level2MenuCode}
+		]]>
+    </update>
+
+    <select id="retrieveMenuDetailInfo" resultType="DataUtil">
+        <![CDATA[
+			SELECT
+					user_id
+				, lvel1_menu_cd
+				, lvel2_menu_cd
+				, menu_use_auth_dvcd
+				, reg_dt
+				, chng_dt
+				, cls_dt
+				, crtn_id
+				, crtn_dttm
+				, updt_id
+				, updt_dttm
+			FROM LEMON.MENU_DETAIL
+			WHERE lvel1_menu_cd =#{menuLevel1}
+			AND lvel2_menu_cd= #{menuLevel2}
+			AND user_id= #{userName}
+		]]>
+    </select>
+
+    <select id="retrieveAllListMenu" resultType="DataUtil">
+        <![CDATA[
+		  SELECT
+				 A.SEQNO															AS "seqNo"
+				, A.LVEL1_MENU_CD													AS "level1MenuCode"
+				, A.LVEL2_MENU_CD													AS "level2MenuCode"
+				, '2'																AS "menuUseRightTypeCode"
+				, A.LVEL1_MENU_DESC													AS "level1MenuDescription"
+				, A.MENU_URI														AS "level2MenuDescription"
+			FROM
+				LEMON.MENU_MASTER A
+			WHERE  A.MENU_SHOW_YN = 'Y'
+			ORDER BY A.SEQNO ASC
+		]]>
+    </select>
+</mapper>

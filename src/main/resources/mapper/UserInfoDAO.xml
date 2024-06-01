@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.page.page.dao.UserInfoDAO">
+
+    <select id="retrieveUserInfo" resultType="DataUtil">
+        <![CDATA[
+            SELECT
+                      A.userID 			AS "userID"
+                    , A.fullname		AS "fullName"
+                    , A.MAIN_OWNER_ID	AS "mainOwnerID"
+                    , A.user_password 	AS "userPassword"
+                    , A.roles 			AS "roles"
+                    , A.create_by		AS "createBy"
+                    , A.register_date 	AS "createDate"
+                    , A.register_time 	AS "CreateTime"
+                    , A.update_date 	AS "updateDate"
+                    , A.update_time 	AS "updateTime"
+                    , A.update_by		AS "updateBY"-- user that update
+                FROM USER_INFO A
+                WHERE A.userID = #{userID}
+        ]]>
+    </select>
+
+    <select id="retrieveUserInfoByUserNameForUpdate" resultType="DataUtil">
+        <![CDATA[
+
+        ]]>
+    </select>
+
+    <select id="retrieveListUserInfo" resultType="DataUtil">
+        <![CDATA[
+
+         ]]>
+    </select>
+
+    <insert id="registerUserInfo">
+        <![CDATA[
+            INSERT INTO user_info
+                VALUES (
+                          #{userID}
+                        , #{fullName}
+                        , #{mainOwnerID}
+                        , #{userPassword}
+                        , #{roles}
+                        , #{createBy}
+                        , #{createDate}
+                        , #{CreateTime}
+                        , #{updateDate}
+                        , #{updateTime}
+                        , #{updateBY}
+             )
+         ]]>
+    </insert>
+
+    <update id="updateUserInfo">
+        <![CDATA[
+            update  USER_INFO
+                        set fullname    =	#{fullName}
+                        , user_password = COALESCE( #{userPassword}, user_password )
+                        , roles 		= #{roles}
+                        , MAIN_OWNER_ID = #{mainOwnerID}
+                        , update_date   = #{updateDate}
+                        , update_time 	= #{updateTime}
+                        , update_by		= #{updateBY}
+            where userid = #{userID}
+        ]]>
+    </update>
+
+    <select id="retrieveListUserInfoByAdmin" resultType="DataUtil">
+        <![CDATA[
+           SELECT
+                      A.userID 			AS "userID"
+                    , A.fullname		AS "fullName"
+                    , A.MAIN_OWNER_ID	AS "mainOwnerID"
+                    , COALESCE ( B.MAIN_OWNER_NAME ,'') AS "mainOwnerName"
+                    , A.user_password 	AS "userPassword"
+                    , A.roles 			AS "roles"
+                    , A.create_by		AS "createBy"
+                    , A.register_date 	AS "createDate"
+                    , A.register_time 	AS "CreateTime"
+                    , A.update_date 	AS "updateDate"
+                    , A.update_time 	AS "updateTime"
+                    , A.update_by		AS "updateBY"-- user that update
+                FROM USER_INFO A
+                    LEFT JOIN MAINONWER B
+                    ON A.MAIN_OWNER_ID = B.MAIN_OWNER_ID
+            WHERE A.CREATE_BY = #{userID} OR A.userID = #{userID}
+            ORDER BY A.REGISTER_DATE DESC , A.REGISTER_TIME DESC
+         ]]>
+    </select>
+
+</mapper>

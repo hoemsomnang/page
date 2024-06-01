@@ -1,0 +1,1321 @@
+
+<!DOCTYPE HTML>
+<html html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<title>Admin</title>
+	<div th:replace="~{fragments/header :: header-css}" />
+	<script src="../../js/pagelist.js"></script>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+
+	<div th:replace="~{fragments/header :: header}" />
+
+	<div th:replace="~{fragments/leftside :: leftside}" />
+
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<section class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2">
+					<div class="col-sm-6">
+						<h1></h1>
+					</div>
+					<div class="col-sm-6">
+						<ol class="breadcrumb float-sm-right">
+							<li class="breadcrumb-item"><a href="#">Home</a></li>
+							<li class="breadcrumb-item">Page Information</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<section class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-header">
+									<!-- <button type="button" class="btn btn-default"
+										data-toggle="modal" data-target="#updateModal">Launch
+										Extra Large Modal</button> -->
+									<button type="button" class="btn btn-success"
+										data-toggle="modal" data-target="#registerModal" th:onclick="registerModel()">
+										<i class="fas fa-plus"></i>
+										<span>Add New</span>
+									</button>
+								</div>
+								<!-- /.card-header -->
+								<div class="card">
+									<div class="card-header"><h1>January</h1></div>
+									<!-- /.card-header -->
+									<div class="card-body">
+										<table id="January"
+											class="table table-bordered table-striped">
+											<thead>
+												<tr>
+													<th>Page ID</th>
+													<th>Page Name</th>
+													<th style="display:none;" >Page Owner ID</th>
+													<th>Page Owner</th>
+													<th style="display:none;" >Main Owner ID</th>
+													<th>Main Owner</th>
+													<th>Page Earn</th>
+													<th>Owner Earn</th>
+													<th>Office Earn</th>
+													<th>Owner Percent</th>
+													<th>Office Percent</th>
+													<th style="display:none;" >Month ID </th>
+													<th>Month </th>
+													<th>Year</th>
+													<th>Page Link</th>
+													<th>Page Status</th>
+													<th>Action</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="pageList:${listJanuary}">
+													<td th:text="${pageList.pageID}"></td>
+													<td th:text="${pageList.pageName}"></td>
+													<td style="display:none;" th:text="${pageList.pageOwnerID}"></td>
+													<td th:text="${pageList.pageOwnerName}"></td>
+													<td style="display:none;" th:text="${pageList.mainOwnerID}"></td>
+													<td th:text="${pageList.mainOwnerName}"></td>
+													<td th:text="${pageList.pageEarn}+'$'"></td>
+													<td th:text="${pageList.ownerAmount}+'$'"></td>
+													<td th:text="${pageList.officeAmount}+'$'"></td>
+													<td th:text="${pageList.ownerPercent}+'%'"></td>
+													<td th:text="${pageList.officePercent}+'%'"></td>
+													<td style="display:none;" th:text="${pageList.monthID}"></td>
+													<td th:text="${pageList.monthName}"></td>
+													<td th:text="${pageList.years}"></td>
+													<td >
+														<a th:href="${pageList.pageLink}" th:text="${pageList.pageLink}" target="_blank" />
+													</td>
+
+													<td th:text="${pageList.pageStatus}"></td>
+													<td>
+														<button type="button" data-toggle="modal"
+															data-target="#updateModal"
+															th:onclick="editInformation( [[${pageList}]] );"
+															class="btn btn-success btn-xs">
+															<i class="fas fa-edit"></i>
+														</button>
+													</td>
+												</tr>
+											</tbody>
+											<tfoot>
+												<tr>
+													<th>Page ID</th>
+													<th>Page Name</th>
+													<th style="display:none;" >Page Owner ID</th>
+													<th>Page Owner</th>
+													<th style="display:none;" >Main Owner ID</th>
+													<th>Main Owner</th>
+													<th>Page Earn</th>
+													<th>Owner Earn</th>
+													<th>Office Earn</th>
+													<th>Owner Percent</th>
+													<th>Office Percent</th>
+													<th style="display:none;" >Month ID </th>
+													<th>Month </th>
+													<th>Year</th>
+													<th>Page Link</th>
+													<th>Page Status</th>
+													<th>Action</th>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+									<!-- /.card-body -->
+								</div>
+								<!-- End January -->
+								<div class="card">
+									<div class="card-header"><h1>February</h1></div>
+									<!-- /.card-header -->
+									<div class="card-body">
+										<table id="example2"
+											   class="table table-bordered table-striped">
+											<thead>
+											<tr>
+												<th>Page ID</th>
+												<th>Page Name</th>
+												<th style="display:none;" >Page Owner ID</th>
+												<th>Page Owner</th>
+												<th style="display:none;" >Main Owner ID</th>
+												<th>Main Owner</th>
+												<th>Page Earn</th>
+												<th>Owner Earn</th>
+												<th>Office Earn</th>
+												<th>Owner Percent</th>
+												<th>Office Percent</th>
+												<th style="display:none;" >Month ID </th>
+												<th>Month </th>
+												<th>Year</th>
+												<th>Page Link</th>
+												<th>Page Status</th>
+												<th>Action</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr th:each="pageList:${listFebruary}">
+												<td th:text="${pageList.pageID}"></td>
+												<td th:text="${pageList.pageName}"></td>
+												<td style="display:none;" th:text="${pageList.pageOwnerID}"></td>
+												<td th:text="${pageList.pageOwnerName}"></td>
+												<td style="display:none;" th:text="${pageList.mainOwnerID}"></td>
+												<td th:text="${pageList.mainOwnerName}"></td>
+												<td th:text="${pageList.pageEarn}+'$'"></td>
+												<td th:text="${pageList.ownerAmount}+'$'"></td>
+												<td th:text="${pageList.officeAmount}+'$'"></td>
+												<td th:text="${pageList.ownerPercent}+'%'"></td>
+												<td th:text="${pageList.officePercent}+'%'"></td>
+												<td style="display:none;" th:text="${pageList.monthID}"></td>
+												<td th:text="${pageList.monthName}"></td>
+												<td th:text="${pageList.years}"></td>
+												<td >
+													<a th:href="${pageList.pageLink}" th:text="${pageList.pageLink}" target="_blank" />
+												</td>
+												<td th:text="${pageList.pageStatus}"></td>
+												<td>
+													<button type="button" data-toggle="modal"
+															data-target="#updateModal"
+															th:onclick="editInformation( [[${pageList}]] );"
+															class="btn btn-success btn-xs">
+														<i class="fas fa-edit"></i>
+													</button>
+												</td>
+											</tr>
+											</tbody>
+											<tfoot>
+											<tr>
+												<th>Page ID</th>
+												<th>Page Name</th>
+												<th style="display:none;" >Page Owner ID</th>
+												<th>Page Owner</th>
+												<th style="display:none;" >Main Owner ID</th>
+												<th>Main Owner</th>
+												<th>Page Earn</th>
+												<th>Owner Earn</th>
+												<th>Office Earn</th>
+												<th>Owner Percent</th>
+												<th>Office Percent</th>
+												<th style="display:none;" >Month ID </th>
+												<th>Month </th>
+												<th>Year</th>
+												<th>Page Link</th>
+												<th>Page Status</th>
+												<th>Action</th>
+											</tr>
+											</tfoot>
+										</table>
+									</div>
+									<!-- /.card-body -->
+								</div>
+								<!-- End February -->
+								<div class="card">
+									<div class="card-header"><h1>March</h1></div>
+									<!-- /.card-header -->
+									<div class="card-body">
+										<table id="March"
+											   class="table table-bordered table-striped">
+											<thead>
+											<tr>
+												<th>Page ID</th>
+												<th>Page Name</th>
+												<th style="display:none;" >Page Owner ID</th>
+												<th>Page Owner</th>
+												<th style="display:none;" >Main Owner ID</th>
+												<th>Main Owner</th>
+												<th>Page Earn</th>
+												<th>Owner Earn</th>
+												<th>Office Earn</th>
+												<th>Owner Percent</th>
+												<th>Office Percent</th>
+												<th style="display:none;" >Month ID </th>
+												<th>Month </th>
+												<th>Year</th>
+												<th>Page Link</th>
+
+												<th>Page Status</th>
+												<th>Action</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr th:each="pageList:${listMarch}">
+												<td th:text="${pageList.pageID}"></td>
+												<td th:text="${pageList.pageName}"></td>
+												<td style="display:none;" th:text="${pageList.pageOwnerID}"></td>
+												<td th:text="${pageList.pageOwnerName}"></td>
+												<td style="display:none;" th:text="${pageList.mainOwnerID}"></td>
+												<td th:text="${pageList.mainOwnerName}"></td>
+												<td th:text="${pageList.pageEarn}+'$'"></td>
+												<td th:text="${pageList.ownerAmount}+'$'"></td>
+												<td th:text="${pageList.officeAmount}+'$'"></td>
+												<td th:text="${pageList.ownerPercent}+'%'"></td>
+												<td th:text="${pageList.officePercent}+'%'"></td>
+												<td style="display:none;" th:text="${pageList.monthID}"></td>
+												<td th:text="${pageList.monthName}"></td>
+												<td th:text="${pageList.years}"></td>
+												<td >
+													<a th:href="${pageList.pageLink}" th:text="${pageList.pageLink}" target="_blank" />
+												</td>
+
+												<td th:text="${pageList.pageStatus}"></td>
+												<td>
+													<button type="button" data-toggle="modal"
+															data-target="#updateModal"
+															th:onclick="editInformation( [[${pageList}]] );"
+															class="btn btn-success btn-xs">
+														<i class="fas fa-edit"></i>
+													</button>
+												</td>
+											</tr>
+											</tbody>
+											<tfoot>
+											<tr>
+												<th>Page ID</th>
+												<th>Page Name</th>
+												<th style="display:none;" >Page Owner ID</th>
+												<th>Page Owner</th>
+												<th style="display:none;" >Main Owner ID</th>
+												<th>Main Owner</th>
+												<th>Page Earn</th>
+												<th>Owner Earn</th>
+												<th>Office Earn</th>
+												<th>Owner Percent</th>
+												<th>Office Percent</th>
+												<th style="display:none;" >Month ID </th>
+												<th>Month </th>
+												<th>Year</th>
+												<th>Page Link</th>
+
+												<th>Page Status</th>
+												<th>Action</th>
+											</tr>
+											</tfoot>
+										</table>
+									</div>
+									<!-- /.card-body -->
+								</div>
+								<!-- End March -->
+								<div class="card">
+									<div class="card-header"><h1>April</h1></div>
+									<!-- /.card-header -->
+									<div class="card-body">
+										<table id="April"
+											   class="table table-bordered table-striped">
+											<thead>
+											<tr>
+												<th>Page ID</th>
+												<th>Page Name</th>
+												<th style="display:none;" >Page Owner ID</th>
+												<th>Page Owner</th>
+												<th style="display:none;" >Main Owner ID</th>
+												<th>Main Owner</th>
+												<th>Page Earn</th>
+												<th>Owner Earn</th>
+												<th>Office Earn</th>
+												<th>Owner Percent</th>
+												<th>Office Percent</th>
+												<th style="display:none;" >Month ID </th>
+												<th>Month </th>
+												<th>Year</th>
+												<th>Page Link</th>
+
+												<th>Page Status</th>
+												<th>Action</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr th:each="pageList:${listApril}">
+												<td th:text="${pageList.pageID}"></td>
+												<td th:text="${pageList.pageName}"></td>
+												<td style="display:none;" th:text="${pageList.pageOwnerID}"></td>
+												<td th:text="${pageList.pageOwnerName}"></td>
+												<td style="display:none;" th:text="${pageList.mainOwnerID}"></td>
+												<td th:text="${pageList.mainOwnerName}"></td>
+												<td th:text="${pageList.pageEarn}+'$'"></td>
+												<td th:text="${pageList.ownerAmount}+'$'"></td>
+												<td th:text="${pageList.officeAmount}+'$'"></td>
+												<td th:text="${pageList.ownerPercent}+'%'"></td>
+												<td th:text="${pageList.officePercent}+'%'"></td>
+												<td style="display:none;" th:text="${pageList.monthID}"></td>
+												<td th:text="${pageList.monthName}"></td>
+												<td th:text="${pageList.years}"></td>
+												<td >
+													<a th:href="${pageList.pageLink}" th:text="${pageList.pageLink}" target="_blank" />
+												</td>
+
+												<td th:text="${pageList.pageStatus}"></td>
+												<td>
+													<button type="button" data-toggle="modal"
+															data-target="#updateModal"
+															th:onclick="editInformation( [[${pageList}]] );"
+															class="btn btn-success btn-xs">
+														<i class="fas fa-edit"></i>
+													</button>
+												</td>
+											</tr>
+											</tbody>
+											<tfoot>
+											<tr>
+												<th>Page ID</th>
+												<th>Page Name</th>
+												<th style="display:none;" >Page Owner ID</th>
+												<th>Page Owner</th>
+												<th style="display:none;" >Main Owner ID</th>
+												<th>Main Owner</th>
+												<th>Page Earn</th>
+												<th>Owner Earn</th>
+												<th>Office Earn</th>
+												<th>Owner Percent</th>
+												<th>Office Percent</th>
+												<th style="display:none;" >Month ID </th>
+												<th>Month </th>
+												<th>Year</th>
+												<th>Page Link</th>
+
+												<th>Page Status</th>
+												<th>Action</th>
+											</tr>
+											</tfoot>
+										</table>
+									</div>
+									<!-- /.card-body -->
+								</div>
+								<!-- End April -->
+								<div class="card">
+									<div class="card-header"><h1>May</h1></div>
+									<!-- /.card-header -->
+									<div class="card-body">
+										<table id="May"
+											   class="table table-bordered table-striped">
+											<thead>
+											<tr>
+												<th>Page ID</th>
+												<th>Page Name</th>
+												<th style="display:none;" >Page Owner ID</th>
+												<th>Page Owner</th>
+												<th style="display:none;" >Main Owner ID</th>
+												<th>Main Owner</th>
+												<th>Page Earn</th>
+												<th>Owner Earn</th>
+												<th>Office Earn</th>
+												<th>Owner Percent</th>
+												<th>Office Percent</th>
+												<th style="display:none;" >Month ID </th>
+												<th>Month </th>
+												<th>Year</th>
+												<th>Page Link</th>
+
+												<th>Page Status</th>
+												<th>Action</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr th:each="pageList:${listMay}">
+												<td th:text="${pageList.pageID}"></td>
+												<td th:text="${pageList.pageName}"></td>
+												<td style="display:none;" th:text="${pageList.pageOwnerID}"></td>
+												<td th:text="${pageList.pageOwnerName}"></td>
+												<td style="display:none;" th:text="${pageList.mainOwnerID}"></td>
+												<td th:text="${pageList.mainOwnerName}"></td>
+												<td th:text="${pageList.pageEarn}+'$'"></td>
+												<td th:text="${pageList.ownerAmount}+'$'"></td>
+												<td th:text="${pageList.officeAmount}+'$'"></td>
+												<td th:text="${pageList.ownerPercent}+'%'"></td>
+												<td th:text="${pageList.officePercent}+'%'"></td>
+												<td style="display:none;" th:text="${pageList.monthID}"></td>
+												<td th:text="${pageList.monthName}"></td>
+												<td th:text="${pageList.years}"></td>
+												<td >
+													<a th:href="${pageList.pageLink}" th:text="${pageList.pageLink}" target="_blank" />
+												</td>
+												<td th:text="${pageList.pageStatus}"></td>
+												<td>
+													<button type="button" data-toggle="modal"
+															data-target="#updateModal"
+															th:onclick="editInformation( [[${pageList}]] );"
+															class="btn btn-success btn-xs">
+														<i class="fas fa-edit"></i>
+													</button>
+												</td>
+											</tr>
+											</tbody>
+											<tfoot>
+											<tr>
+												<th>Page ID</th>
+												<th>Page Name</th>
+												<th style="display:none;" >Page Owner ID</th>
+												<th>Page Owner</th>
+												<th style="display:none;" >Main Owner ID</th>
+												<th>Main Owner</th>
+												<th>Page Earn</th>
+												<th>Owner Earn</th>
+												<th>Office Earn</th>
+												<th>Owner Percent</th>
+												<th>Office Percent</th>
+												<th style="display:none;" >Month ID </th>
+												<th>Month </th>
+												<th>Year</th>
+												<th>Page Link</th>
+
+												<th>Page Status</th>
+												<th>Action</th>
+											</tr>
+											</tfoot>
+										</table>
+									</div>
+									<!-- /.card-body -->
+								</div>
+								<!-- End May -->
+								<div class="card">
+									<div class="card-header"><h1>June</h1></div>
+									<!-- /.card-header -->
+									<div class="card-body">
+										<table id="June"
+											   class="table table-bordered table-striped">
+											<thead>
+											<tr>
+												<th>Page ID</th>
+												<th>Page Name</th>
+												<th style="display:none;" >Page Owner ID</th>
+												<th>Page Owner</th>
+												<th style="display:none;" >Main Owner ID</th>
+												<th>Main Owner</th>
+												<th>Page Earn</th>
+												<th>Owner Earn</th>
+												<th>Office Earn</th>
+												<th>Owner Percent</th>
+												<th>Office Percent</th>
+												<th style="display:none;" >Month ID </th>
+												<th>Month </th>
+												<th>Year</th>
+												<th>Page Link</th>
+
+												<th>Page Status</th>
+												<th>Action</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr th:each="pageList:${listJune}">
+												<td th:text="${pageList.pageID}"></td>
+												<td th:text="${pageList.pageName}"></td>
+												<td style="display:none;" th:text="${pageList.pageOwnerID}"></td>
+												<td th:text="${pageList.pageOwnerName}"></td>
+												<td style="display:none;" th:text="${pageList.mainOwnerID}"></td>
+												<td th:text="${pageList.mainOwnerName}"></td>
+												<td th:text="${pageList.pageEarn}+'$'"></td>
+												<td th:text="${pageList.ownerAmount}+'$'"></td>
+												<td th:text="${pageList.officeAmount}+'$'"></td>
+												<td th:text="${pageList.ownerPercent}+'%'"></td>
+												<td th:text="${pageList.officePercent}+'%'"></td>
+												<td style="display:none;" th:text="${pageList.monthID}"></td>
+												<td th:text="${pageList.monthName}"></td>
+												<td th:text="${pageList.years}"></td>
+												<td >
+													<a th:href="${pageList.pageLink}" th:text="${pageList.pageLink}" target="_blank" />
+												</td>
+
+												<td th:text="${pageList.pageStatus}"></td>
+												<td>
+													<button type="button" data-toggle="modal"
+															data-target="#updateModal"
+															th:onclick="editInformation( [[${pageList}]] );"
+															class="btn btn-success btn-xs">
+														<i class="fas fa-edit"></i>
+													</button>
+												</td>
+											</tr>
+											</tbody>
+											<tfoot>
+											<tr>
+												<th>Page ID</th>
+												<th>Page Name</th>
+												<th style="display:none;" >Page Owner ID</th>
+												<th>Page Owner</th>
+												<th style="display:none;" >Main Owner ID</th>
+												<th>Main Owner</th>
+												<th>Page Earn</th>
+												<th>Owner Earn</th>
+												<th>Office Earn</th>
+												<th>Owner Percent</th>
+												<th>Office Percent</th>
+												<th style="display:none;" >Month ID </th>
+												<th>Month </th>
+												<th>Year</th>
+												<th>Page Link</th>
+
+												<th>Page Status</th>
+												<th>Action</th>
+											</tr>
+											</tfoot>
+										</table>
+									</div>
+									<!-- /.card-body -->
+								</div>
+								<!-- End June -->
+								<div class="card">
+									<div class="card-header"><h1>July</h1></div>
+									<!-- /.card-header -->
+									<div class="card-body">
+										<table id="July"
+											   class="table table-bordered table-striped">
+											<thead>
+											<tr>
+												<th>Page ID</th>
+												<th>Page Name</th>
+												<th style="display:none;" >Page Owner ID</th>
+												<th>Page Owner</th>
+												<th style="display:none;" >Main Owner ID</th>
+												<th>Main Owner</th>
+												<th>Page Earn</th>
+												<th>Owner Earn</th>
+												<th>Office Earn</th>
+												<th>Owner Percent</th>
+												<th>Office Percent</th>
+												<th style="display:none;" >Month ID </th>
+												<th>Month </th>
+												<th>Year</th>
+												<th>Page Link</th>
+
+												<th>Page Status</th>
+												<th>Action</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr th:each="pageList:${listJuly}">
+												<td th:text="${pageList.pageID}"></td>
+												<td th:text="${pageList.pageName}"></td>
+												<td style="display:none;" th:text="${pageList.pageOwnerID}"></td>
+												<td th:text="${pageList.pageOwnerName}"></td>
+												<td style="display:none;" th:text="${pageList.mainOwnerID}"></td>
+												<td th:text="${pageList.mainOwnerName}"></td>
+												<td th:text="${pageList.pageEarn}+'$'"></td>
+												<td th:text="${pageList.ownerAmount}+'$'"></td>
+												<td th:text="${pageList.officeAmount}+'$'"></td>
+												<td th:text="${pageList.ownerPercent}+'%'"></td>
+												<td th:text="${pageList.officePercent}+'%'"></td>
+												<td style="display:none;" th:text="${pageList.monthID}"></td>
+												<td th:text="${pageList.monthName}"></td>
+												<td th:text="${pageList.years}"></td>
+												<td >
+													<a th:href="${pageList.pageLink}" th:text="${pageList.pageLink}" target="_blank" />
+												</td>
+
+												<td th:text="${pageList.pageStatus}"></td>
+												<td>
+													<button type="button" data-toggle="modal"
+															data-target="#updateModal"
+															th:onclick="editInformation( [[${pageList}]] );"
+															class="btn btn-success btn-xs">
+														<i class="fas fa-edit"></i>
+													</button>
+												</td>
+											</tr>
+											</tbody>
+											<tfoot>
+											<tr>
+												<th>Page ID</th>
+												<th>Page Name</th>
+												<th style="display:none;" >Page Owner ID</th>
+												<th>Page Owner</th>
+												<th style="display:none;" >Main Owner ID</th>
+												<th>Main Owner</th>
+												<th>Page Earn</th>
+												<th>Owner Earn</th>
+												<th>Office Earn</th>
+												<th>Owner Percent</th>
+												<th>Office Percent</th>
+												<th style="display:none;" >Month ID </th>
+												<th>Month </th>
+												<th>Year</th>
+												<th>Page Link</th>
+
+												<th>Page Status</th>
+												<th>Action</th>
+											</tr>
+											</tfoot>
+										</table>
+									</div>
+									<!-- /.card-body -->
+								</div>
+								<!-- End July -->
+								<div class="card">
+									<div class="card-header"><h1>August</h1></div>
+									<!-- /.card-header -->
+									<div class="card-body">
+										<table id="August"
+											   class="table table-bordered table-striped">
+											<thead>
+											<tr>
+												<th>Page ID</th>
+												<th>Page Name</th>
+												<th style="display:none;" >Page Owner ID</th>
+												<th>Page Owner</th>
+												<th style="display:none;" >Main Owner ID</th>
+												<th>Main Owner</th>
+												<th>Page Earn</th>
+												<th>Owner Earn</th>
+												<th>Office Earn</th>
+												<th>Owner Percent</th>
+												<th>Office Percent</th>
+												<th style="display:none;" >Month ID </th>
+												<th>Month </th>
+												<th>Year</th>
+												<th>Page Link</th>
+
+												<th>Page Status</th>
+												<th>Action</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr th:each="pageList:${listAugust}">
+												<td th:text="${pageList.pageID}"></td>
+												<td th:text="${pageList.pageName}"></td>
+												<td style="display:none;" th:text="${pageList.pageOwnerID}"></td>
+												<td th:text="${pageList.pageOwnerName}"></td>
+												<td style="display:none;" th:text="${pageList.mainOwnerID}"></td>
+												<td th:text="${pageList.mainOwnerName}"></td>
+												<td th:text="${pageList.pageEarn}+'$'"></td>
+												<td th:text="${pageList.ownerAmount}+'$'"></td>
+												<td th:text="${pageList.officeAmount}+'$'"></td>
+												<td th:text="${pageList.ownerPercent}+'%'"></td>
+												<td th:text="${pageList.officePercent}+'%'"></td>
+												<td style="display:none;" th:text="${pageList.monthID}"></td>
+												<td th:text="${pageList.monthName}"></td>
+												<td th:text="${pageList.years}"></td>
+												<td >
+													<a th:href="${pageList.pageLink}" th:text="${pageList.pageLink}" target="_blank" />
+												</td>
+
+												<td th:text="${pageList.pageStatus}"></td>
+												<td>
+													<button type="button" data-toggle="modal"
+															data-target="#updateModal"
+															th:onclick="editInformation( [[${pageList}]] );"
+															class="btn btn-success btn-xs">
+														<i class="fas fa-edit"></i>
+													</button>
+												</td>
+											</tr>
+											</tbody>
+											<tfoot>
+											<tr>
+												<th>Page ID</th>
+												<th>Page Name</th>
+												<th style="display:none;" >Page Owner ID</th>
+												<th>Page Owner</th>
+												<th style="display:none;" >Main Owner ID</th>
+												<th>Main Owner</th>
+												<th>Page Earn</th>
+												<th>Owner Earn</th>
+												<th>Office Earn</th>
+												<th>Owner Percent</th>
+												<th>Office Percent</th>
+												<th style="display:none;" >Month ID </th>
+												<th>Month </th>
+												<th>Year</th>
+												<th>Page Link</th>
+
+												<th>Page Status</th>
+												<th>Action</th>
+											</tr>
+											</tfoot>
+										</table>
+									</div>
+									<!-- /.card-body -->
+								</div>
+								<!-- End August -->
+								<div class="card">
+									<div class="card-header"><h1>September</h1></div>
+									<!-- /.card-header -->
+									<div class="card-body">
+										<table id="September"
+											   class="table table-bordered table-striped">
+											<thead>
+											<tr>
+												<th>Page ID</th>
+												<th>Page Name</th>
+												<th style="display:none;" >Page Owner ID</th>
+												<th>Page Owner</th>
+												<th style="display:none;" >Main Owner ID</th>
+												<th>Main Owner</th>
+												<th>Page Earn</th>
+												<th>Owner Earn</th>
+												<th>Office Earn</th>
+												<th>Owner Percent</th>
+												<th>Office Percent</th>
+												<th style="display:none;" >Month ID </th>
+												<th>Month </th>
+												<th>Year</th>
+												<th>Page Link</th>
+
+												<th>Page Status</th>
+												<th>Action</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr th:each="pageList:${listSeptember}">
+												<td th:text="${pageList.pageID}"></td>
+												<td th:text="${pageList.pageName}"></td>
+												<td style="display:none;" th:text="${pageList.pageOwnerID}"></td>
+												<td th:text="${pageList.pageOwnerName}"></td>
+												<td style="display:none;" th:text="${pageList.mainOwnerID}"></td>
+												<td th:text="${pageList.mainOwnerName}"></td>
+												<td th:text="${pageList.pageEarn}+'$'"></td>
+												<td th:text="${pageList.ownerAmount}+'$'"></td>
+												<td th:text="${pageList.officeAmount}+'$'"></td>
+												<td th:text="${pageList.ownerPercent}+'%'"></td>
+												<td th:text="${pageList.officePercent}+'%'"></td>
+												<td style="display:none;" th:text="${pageList.monthID}"></td>
+												<td th:text="${pageList.monthName}"></td>
+												<td th:text="${pageList.years}"></td>
+												<td >
+													<a th:href="${pageList.pageLink}" th:text="${pageList.pageLink}" target="_blank" />
+												</td>
+
+												<td th:text="${pageList.pageStatus}"></td>
+												<td>
+													<button type="button" data-toggle="modal"
+															data-target="#updateModal"
+															th:onclick="editInformation( [[${pageList}]] );"
+															class="btn btn-success btn-xs">
+														<i class="fas fa-edit"></i>
+													</button>
+												</td>
+											</tr>
+											</tbody>
+											<tfoot>
+											<tr>
+												<th>Page ID</th>
+												<th>Page Name</th>
+												<th style="display:none;" >Page Owner ID</th>
+												<th>Page Owner</th>
+												<th style="display:none;" >Main Owner ID</th>
+												<th>Main Owner</th>
+												<th>Page Earn</th>
+												<th>Owner Earn</th>
+												<th>Office Earn</th>
+												<th>Owner Percent</th>
+												<th>Office Percent</th>
+												<th style="display:none;" >Month ID </th>
+												<th>Month </th>
+												<th>Year</th>
+												<th>Page Link</th>
+
+												<th>Page Status</th>
+												<th>Action</th>
+											</tr>
+											</tfoot>
+										</table>
+									</div>
+									<!-- /.card-body -->
+								</div>
+								<!-- End September -->
+								<div class="card">
+									<div class="card-header"><h1>October</h1></div>
+									<!-- /.card-header -->
+									<div class="card-body">
+										<table id="October"
+											   class="table table-bordered table-striped">
+											<thead>
+											<tr>
+												<th>Page ID</th>
+												<th>Page Name</th>
+												<th style="display:none;" >Page Owner ID</th>
+												<th>Page Owner</th>
+												<th style="display:none;" >Main Owner ID</th>
+												<th>Main Owner</th>
+												<th>Page Earn</th>
+												<th>Owner Earn</th>
+												<th>Office Earn</th>
+												<th>Owner Percent</th>
+												<th>Office Percent</th>
+												<th style="display:none;" >Month ID </th>
+												<th>Month </th>
+												<th>Year</th>
+												<th>Page Link</th>
+
+												<th>Page Status</th>
+												<th>Action</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr th:each="pageList:${listOctober}">
+												<td th:text="${pageList.pageID}"></td>
+												<td th:text="${pageList.pageName}"></td>
+												<td style="display:none;" th:text="${pageList.pageOwnerID}"></td>
+												<td th:text="${pageList.pageOwnerName}"></td>
+												<td style="display:none;" th:text="${pageList.mainOwnerID}"></td>
+												<td th:text="${pageList.mainOwnerName}"></td>
+												<td th:text="${pageList.pageEarn}+'$'"></td>
+												<td th:text="${pageList.ownerAmount}+'$'"></td>
+												<td th:text="${pageList.officeAmount}+'$'"></td>
+												<td th:text="${pageList.ownerPercent}+'%'"></td>
+												<td th:text="${pageList.officePercent}+'%'"></td>
+												<td style="display:none;" th:text="${pageList.monthID}"></td>
+												<td th:text="${pageList.monthName}"></td>
+												<td th:text="${pageList.years}"></td>
+												<td >
+													<a th:href="${pageList.pageLink}" th:text="${pageList.pageLink}" target="_blank" />
+												</td>
+
+												<td th:text="${pageList.pageStatus}"></td>
+												<td>
+													<button type="button" data-toggle="modal"
+															data-target="#updateModal"
+															th:onclick="editInformation( [[${pageList}]] );"
+															class="btn btn-success btn-xs">
+														<i class="fas fa-edit"></i>
+													</button>
+												</td>
+											</tr>
+											</tbody>
+											<tfoot>
+											<tr>
+												<th>Page ID</th>
+												<th>Page Name</th>
+												<th style="display:none;" >Page Owner ID</th>
+												<th>Page Owner</th>
+												<th style="display:none;" >Main Owner ID</th>
+												<th>Main Owner</th>
+												<th>Page Earn</th>
+												<th>Owner Earn</th>
+												<th>Office Earn</th>
+												<th>Owner Percent</th>
+												<th>Office Percent</th>
+												<th style="display:none;" >Month ID </th>
+												<th>Month </th>
+												<th>Year</th>
+												<th>Page Link</th>
+
+												<th>Page Status</th>
+												<th>Action</th>
+											</tr>
+											</tfoot>
+										</table>
+									</div>
+									<!-- /.card-body -->
+								</div>
+								<!-- End October -->
+								<div class="card">
+									<div class="card-header"><h1>November</h1></div>
+									<!-- /.card-header -->
+									<div class="card-body">
+										<table id="November"
+											   class="table table-bordered table-striped">
+											<thead>
+											<tr>
+												<th>Page ID</th>
+												<th>Page Name</th>
+												<th style="display:none;" >Page Owner ID</th>
+												<th>Page Owner</th>
+												<th style="display:none;" >Main Owner ID</th>
+												<th>Main Owner</th>
+												<th>Page Earn</th>
+												<th>Owner Earn</th>
+												<th>Office Earn</th>
+												<th>Owner Percent</th>
+												<th>Office Percent</th>
+												<th style="display:none;" >Month ID </th>
+												<th>Month </th>
+												<th>Year</th>
+												<th>Page Link</th>
+
+												<th>Page Status</th>
+												<th>Action</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr th:each="pageList:${listNovember}">
+												<td th:text="${pageList.pageID}"></td>
+												<td th:text="${pageList.pageName}"></td>
+												<td style="display:none;" th:text="${pageList.pageOwnerID}"></td>
+												<td th:text="${pageList.pageOwnerName}"></td>
+												<td style="display:none;" th:text="${pageList.mainOwnerID}"></td>
+												<td th:text="${pageList.mainOwnerName}"></td>
+												<td th:text="${pageList.pageEarn}+'$'"></td>
+												<td th:text="${pageList.ownerAmount}+'$'"></td>
+												<td th:text="${pageList.officeAmount}+'$'"></td>
+												<td th:text="${pageList.ownerPercent}+'%'"></td>
+												<td th:text="${pageList.officePercent}+'%'"></td>
+												<td style="display:none;" th:text="${pageList.monthID}"></td>
+												<td th:text="${pageList.monthName}"></td>
+												<td th:text="${pageList.years}"></td>
+												<td >
+													<a th:href="${pageList.pageLink}" th:text="${pageList.pageLink}" target="_blank" />
+												</td>
+
+												<td th:text="${pageList.pageStatus}"></td>
+												<td>
+													<button type="button" data-toggle="modal"
+															data-target="#updateModal"
+															th:onclick="editInformation( [[${pageList}]] );"
+															class="btn btn-success btn-xs">
+														<i class="fas fa-edit"></i>
+													</button>
+												</td>
+											</tr>
+											</tbody>
+											<tfoot>
+											<tr>
+												<th>Page ID</th>
+												<th>Page Name</th>
+												<th style="display:none;" >Page Owner ID</th>
+												<th>Page Owner</th>
+												<th style="display:none;" >Main Owner ID</th>
+												<th>Main Owner</th>
+												<th>Page Earn</th>
+												<th>Owner Earn</th>
+												<th>Office Earn</th>
+												<th>Owner Percent</th>
+												<th>Office Percent</th>
+												<th style="display:none;" >Month ID </th>
+												<th>Month </th>
+												<th>Year</th>
+												<th>Page Link</th>
+
+												<th>Page Status</th>
+												<th>Action</th>
+											</tr>
+											</tfoot>
+										</table>
+									</div>
+									<!-- /.card-body -->
+								</div>
+								<!-- End November -->
+								<div class="card">
+									<div class="card-header"><h1>December</h1></div>
+									<!-- /.card-header -->
+									<div class="card-body">
+										<table id="December"
+											   class="table table-bordered table-striped">
+											<thead>
+											<tr>
+												<th>Page ID</th>
+												<th>Page Name</th>
+												<th style="display:none;" >Page Owner ID</th>
+												<th>Page Owner</th>
+												<th style="display:none;" >Main Owner ID</th>
+												<th>Main Owner</th>
+												<th>Page Earn</th>
+												<th>Owner Earn</th>
+												<th>Office Earn</th>
+												<th>Owner Percent</th>
+												<th>Office Percent</th>
+												<th style="display:none;" >Month ID </th>
+												<th>Month </th>
+												<th>Year</th>
+												<th>Page Link</th>
+
+												<th>Page Status</th>
+												<th>Action</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr th:each="pageList:${listDecember}">
+												<td th:text="${pageList.pageID}"></td>
+												<td th:text="${pageList.pageName}"></td>
+												<td style="display:none;" th:text="${pageList.pageOwnerID}"></td>
+												<td th:text="${pageList.pageOwnerName}"></td>
+												<td style="display:none;" th:text="${pageList.mainOwnerID}"></td>
+												<td th:text="${pageList.mainOwnerName}"></td>
+												<td th:text="${pageList.pageEarn}+'$'"></td>
+												<td th:text="${pageList.ownerAmount}+'$'"></td>
+												<td th:text="${pageList.officeAmount}+'$'"></td>
+												<td th:text="${pageList.ownerPercent}+'%'"></td>
+												<td th:text="${pageList.officePercent}+'%'"></td>
+												<td style="display:none;" th:text="${pageList.monthID}"></td>
+												<td th:text="${pageList.monthName}"></td>
+												<td th:text="${pageList.years}"></td>
+												<td >
+													<a th:href="${pageList.pageLink}" th:text="${pageList.pageLink}" target="_blank" />
+												</td>
+												<td th:text="${pageList.pageStatus}"></td>
+												<td>
+													<button type="button" data-toggle="modal"
+															data-target="#updateModal"
+															th:onclick="editInformation( [[${pageList}]] );"
+															class="btn btn-success btn-xs">
+														<i class="fas fa-edit"></i>
+													</button>
+												</td>
+											</tr>
+											</tbody>
+											<tfoot>
+											<tr>
+												<th>Page ID</th>
+												<th>Page Name</th>
+												<th style="display:none;" >Page Owner ID</th>
+												<th>Page Owner</th>
+												<th style="display:none;" >Main Owner ID</th>
+												<th>Main Owner</th>
+												<th>Page Earn</th>
+												<th>Owner Earn</th>
+												<th>Office Earn</th>
+												<th>Owner Percent</th>
+												<th>Office Percent</th>
+												<th style="display:none;" >Month ID </th>
+												<th>Month </th>
+												<th>Year</th>
+												<th>Page Link</th>
+
+												<th>Page Status</th>
+												<th>Action</th>
+											</tr>
+											</tfoot>
+										</table>
+									</div>
+									<!-- /.card-body -->
+								</div>
+								<!-- End December -->
+
+							</div>
+							<!-- /.card -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+				<!-- /.container-fluid -->
+			</section>
+		</section>
+		<!-- Modal Register -->
+		<div class="modal fade" id="registerModal">
+			<div class="modal-dialog modal-xl">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Register Page Information</h4>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="card card-primary">
+							<div class="card-header"></div>
+							<!-- /.card-header -->
+							<!-- form start -->
+							<form>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-6">
+
+											<div class="form-group">
+												<label>Page ID</label>
+												<input type="text" id="pageID" class="form-control" >
+											</div>
+											<div class="form-group">
+												<label>Main Owner Name</label>
+												<select class="form-control" id="mainOwnerID">
+													<option th:each="listMainOwner : ${listMainOwner}" th:value="${listMainOwner.mainOwnerID}" th:text="${listMainOwner.mainOwnerName}"></option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label>Page Month Year</label>
+												<select class="form-control" id="pageMonthID">
+													<option th:each="listPageMonth : ${listPageMonth}" th:value="${listPageMonth.pageMonthID}" th:text="${listPageMonth.pageMonthID}+'-'+${listPageMonth.pageMonth}+ '-' +${listPageMonth.pageYear}"></option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label>Page Earning</label>
+												<input type="number" class="form-control" id="pageEarning" th:onchange="registerPageEarningChange()">
+											</div>
+											<div class="form-group">
+												<label>Page Status</label> <!-- <input type="text"
+													class="form-control" id="registerPageOwnerName"> -->
+												<select class="form-control" id="pageStatus" >
+													<option value="normal">Normal</option>
+													<option value="onHold">On Hold</option>
+													<option value="flagged">flagged</option>
+													<option value="restricted">Restricted</option>
+												</select>
+											</div>
+
+										</div>
+
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Page Owner Name</label> <!-- <input type="text"
+													class="form-control" id="registerPageOwnerName"> -->
+												<select class="form-control" id="pageOwnerID">
+													<option th:each="listPageOwner : ${listPageOwner}" th:value="${listPageOwner.pageOwnerID}" th:text="${listPageOwner.pageOwnerName}"></option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label>Page Name</label>
+												<input type="text" class="form-control" id="pageName">
+											</div>
+
+											<div class="form-group">
+												<label>Office Percent</label>
+												<input type="number" class="form-control" id="officePercent"  th:onChange="percentOnChange( 'office' )">
+											</div>
+											<div class="form-group">
+												<label>Owner Percent</label>
+												<input type="number" class="form-control" id="ownerPercent" th:onChange="percentOnChange( 'owner' )">
+											</div>
+											<div class="form-group">
+												<label>Page Link</label>
+												<input type="text" class="form-control" id="pageLink" >
+											</div>
+
+										</div>
+									</div>
+								</div>
+								<!-- /.card-body -->
+							</form>
+						</div>
+					</div>
+					<div class="modal-footer justify-content-between">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" th:onClick="registerDataInformation();">Save</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<!-- Modal Update -->
+		<div class="modal fade" id="updateModal">
+			<div class="modal-dialog modal-xl">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">Update Page Information</h4>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="card card-primary">
+							<div class="card-header"></div>
+							<!-- /.card-header -->
+							<!-- form start -->
+							<form>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-6">
+
+											<div class="form-group">
+												<label>Page ID</label>
+												<input type="text" id="pageIDUpdate" class="form-control" disabled="true" >
+											</div>
+											<div class="form-group">
+												<label>Main Owner Name</label>
+												<select class="form-control" id="mainOwnerIDUpdate">
+													<option th:each="listMainOwner : ${listMainOwner}" th:value="${listMainOwner.mainOwnerID}" th:text="${listMainOwner.mainOwnerName}"></option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label>Page Month Year</label>
+												<select class="form-control" id="pageMonthIDUpdate">
+													<option th:each="listPageMonth : ${listPageMonth}" th:value="${listPageMonth.pageMonthID}" th:text="${listPageMonth.pageMonthID}+'-'+${listPageMonth.pageMonth}+ '-' +${listPageMonth.pageYear}"></option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label>Page Earning</label>
+												<input type="number" class="form-control" id="pageEarningUpdate" th:onchange="registerPageEarningChange()">
+											</div>
+											<div class="form-group">
+												<label>Page Status</label> <!-- <input type="text"
+													class="form-control" id="registerPageOwnerName"> -->
+												<select class="form-control" id="pageStatusUpdate" >
+													<option value="normal">Normal</option>
+													<option value="onHold">On Hold</option>
+													<option value="flagged">flagged</option>
+													<option value="restricted">Restricted</option>
+												</select>
+											</div>
+
+										</div>
+
+										<div class="col-md-6">
+											<div class="form-group">
+												<label>Page Owner Name</label> <!-- <input type="text"
+													class="form-control" id="registerPageOwnerName"> -->
+												<select class="form-control" id="pageOwnerIDUpdate">
+													<option th:each="listPageOwner : ${listPageOwner}" th:value="${listPageOwner.pageOwnerID}" th:text="${listPageOwner.pageOwnerName}"></option>
+												</select>
+											</div>
+											<div class="form-group">
+												<label>Page Name</label>
+												<input type="text" class="form-control" id="pageNameUpdate">
+											</div>
+
+											<div class="form-group">
+												<label>Office Percent</label>
+												<input type="number" class="form-control" id="officePercentUpdate" th:onChange="percentOnChange( 'officeUpdate' )">
+											</div>
+											<div class="form-group">
+												<label>Owner Percent</label>
+												<input type="number" class="form-control" id="ownerPercentUpdate" th:onChange="percentOnChange( 'ownerUpdate' )">
+											</div>
+											<div class="form-group">
+												<label>Page Link</label>
+												<input type="text" class="form-control" id="pageLinkUpdate" >
+											</div>
+											<div class="form-group" style="display:none;">
+												<label>Month</label>
+												<input type="text" class="form-control" id="monthID" >
+											</div>
+											<div class="form-group" style="display:none;">
+												<label>Year</label>
+												<input type="text" class="form-control" id="years" >
+											</div>
+
+										</div>
+									</div>
+								</div>
+								<!-- /.card-body -->
+							</form>
+						</div>
+					</div>
+					<div class="modal-footer justify-content-between">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" th:onClick="updateDataInformation();">Save changes</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+	</div>
+
+	<div th:replace="~{fragments/footer :: footer}" />
+	<div th:replace="~{fragments/footer :: footer}" />
+	<script language="JavaScript">
+		/** add active class and stay opened when selected */
+        var url = window.location;
+
+        // for sidebar menu entirely but not cover treeview
+        $('ul.nav-sidebar a').filter(function() {
+            return this.href == url;
+        }).addClass('active');
+
+        // for treeview
+        $('ul.nav-treeview a').filter(function() {
+            return this.href == url;
+        }).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').prev('a').addClass('active');
+
+	  $(function () {
+		$("#January").DataTable({
+		  "responsive": true, "lengthChange": false, "autoWidth": false,
+		  "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+		}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+		$('#example2').DataTable({
+		  "paging": true,
+		  "lengthChange": false,
+		  "searching": false,
+		  "ordering": true,
+		  "info": true,
+		  "autoWidth": false,
+		  "responsive": true,
+		});
+	  });
+
+
+	</script>
+</body>
+</html>
