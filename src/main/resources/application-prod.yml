@@ -1,13 +1,6 @@
-
 spring:
-  profiles:
-    active: pro
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://dpg-cpd8rtdds78s73e7jsb0-a.oregon-postgres.render.com:5432/postgres_vdg1
     username: dsc
     password: 7wHKASinFq9NPDpyUbNkVytJZRXx5QFW
-
-mybatis:
-  mapper-locations: classpath:mapper/**/*.xml
-  config-location: classpath:mybatis_config.xml
